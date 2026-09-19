@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams, useLocation } from 'react-router-dom';
 import { Container, Title, Grid } from '@mantine/core';
 import { Header } from '../../widgets/Header/Header';
 import { JobList } from '../../widgets/JobList/JobList';
@@ -8,12 +8,21 @@ const DEFAULT_SKILLS = ['JavaScript', 'React', 'Redux', 'Python'];
 
 export function JobsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const search = searchParams.get('search') || '';
-  const city = searchParams.get('city') || 'Все';
   const skillsParam = searchParams.get('skills');
   const skills = skillsParam ? skillsParam.split(',') : DEFAULT_SKILLS;
   const page = Number(searchParams.get('page')) || 1;
+
+  // Определяем город из URL
+  const getCityFromPath = () => {
+    if (location.pathname.includes('moscow')) return 'Москва';
+    if (location.pathname.includes('petersburg')) return 'Санкт-Петербург';
+    return 'Все';
+  };
+
+  const city = getCityFromPath();
 
   const handleSearchChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -37,14 +46,8 @@ export function JobsPage() {
   };
 
   const handleCityChange = (value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value && value !== 'Все') {
-      params.set('city', value);
-    } else {
-      params.delete('city');
-    }
-    params.set('page', '1');
-    setSearchParams(params);
+    // Город теперь управляется через табы (роуты), а не через query params
+    // Этот метод оставлен для совместимости
   };
 
   const handleSkillsChange = (newSkills: string[]) => {

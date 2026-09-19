@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Select, Group, Pill, ActionIcon, Stack, Text, TextInput } from '@mantine/core';
+import { Tabs, Pill, ActionIcon, Stack, Text, TextInput, Group } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface JobFiltersProps {
   onCityChange: (value: string) => void;
@@ -17,6 +18,8 @@ export function JobFilters({
 }: JobFiltersProps) {
   const [newSkill, setNewSkill] = useState('');
   const [skills, setSkills] = useState<string[]>(currentSkills);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAddSkill = () => {
     if (newSkill.trim() && !skills.includes(newSkill.trim())) {
@@ -38,6 +41,20 @@ export function JobFilters({
       e.preventDefault();
       handleAddSkill();
     }
+  };
+
+  const handleTabChange = (city: string | null) => {
+    if (city === 'moscow') {
+      navigate('/vacancies/moscow');
+    } else if (city === 'petersburg') {
+      navigate('/vacancies/petersburg');
+    }
+  };
+
+  const getActiveTab = () => {
+    if (location.pathname.includes('moscow')) return 'moscow';
+    if (location.pathname.includes('petersburg')) return 'petersburg';
+    return null;
   };
 
   return (
@@ -71,14 +88,13 @@ export function JobFilters({
         </Group>
       </div>
 
-      {/* Город */}
-      <Select
-        placeholder="Все города"
-        data={['Все', 'Москва', 'Санкт-Петербург']}
-        value={currentCity}
-        onChange={(value) => onCityChange(value || 'Все')}
-        size="sm"
-      />
+      {/* Город - Табы */}
+      <Tabs value={getActiveTab()} onChange={handleTabChange}>
+        <Tabs.List>
+          <Tabs.Tab value="moscow">Москва</Tabs.Tab>
+          <Tabs.Tab value="petersburg">Санкт-Петербург</Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
     </Stack>
   );
 }
