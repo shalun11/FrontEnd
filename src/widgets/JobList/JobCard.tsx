@@ -1,4 +1,5 @@
 import { Card, Text, Group, Badge, Button, Stack } from '@mantine/core';
+import { Link } from 'react-router-dom';
 import type { Job } from '../../shared/types/job';
 
 interface JobCardProps {
@@ -6,7 +7,6 @@ interface JobCardProps {
 }
 
 export function JobCard({ job }: JobCardProps) {
-  // Функция для отображения типа занятости
   const getSpaceBadge = (space: string) => {
     const labels: Record<string, string> = {
       office: 'ОФИС',
@@ -19,12 +19,10 @@ export function JobCard({ job }: JobCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder mb="md">
       <Stack gap="xs">
-        {/* Название вакансии */}
         <Text fz="lg" fw={600} c="#4263EB">
           {job.name}
         </Text>
 
-        {/* Зарплата и опыт */}
         <Group gap="sm">
           <Text fz="sm" fw={500}>
             {job.salary} ₽
@@ -34,29 +32,23 @@ export function JobCard({ job }: JobCardProps) {
           </Text>
         </Group>
 
-        {/* Компания */}
         <Text fz="sm" c="dimmed">
           {job.company_name}
         </Text>
 
-        {/* Теги */}
         <Group gap="xs">
-          <Badge
-            size="sm"
-            color="blue"
-            variant="light"
-          >
+          <Badge size="sm" color="blue" variant="light">
             {getSpaceBadge(job.space)}
           </Badge>
         </Group>
 
-        {/* Город */}
         <Text fz="sm" c="dimmed">
           {job.city}
         </Text>
 
-        {/* Кнопка */}
         <Button
+          component={Link}
+          to={`/vacancies/${job.id}`}
           size="xs"
           color="dark"
           variant="filled"

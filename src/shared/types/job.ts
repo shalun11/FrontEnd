@@ -6,6 +6,8 @@ export interface Job {
   salary: string;
   published_at: string;
   short_description: string;
+  description: string;
+  about_company: string;
   space: 'office' | 'remote' | 'hybrid';
   skills: string;
   experience: string;
@@ -24,6 +26,11 @@ export interface JobsResponse {
   success: boolean;
   pagination: Pagination;
   jobs: Job[];
+}
+
+export interface JobResponse {
+  success: boolean;
+  job: Job;
 }
 
 export interface JobsQueryParams {

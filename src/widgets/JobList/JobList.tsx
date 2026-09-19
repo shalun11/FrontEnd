@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Stack, Pagination } from '@mantine/core';
 import { useGetJobsQuery } from '../../shared/api/jobsApi';
 import { JobCard } from './JobCard';
@@ -7,11 +6,11 @@ interface JobListProps {
   search: string;
   city: string;
   skills: string[];
+  page: number;
+  onPageChange: (page: number) => void;
 }
 
-export function JobList({ search, city, skills }: JobListProps) {
-  const [page, setPage] = useState(1);
-
+export function JobList({ search, city, skills, page, onPageChange }: JobListProps) {
   const { data, isLoading, isError } = useGetJobsQuery({
     page,
     search,
@@ -29,16 +28,14 @@ export function JobList({ search, city, skills }: JobListProps) {
 
   return (
     <Stack gap="md" style={{ maxWidth: 600 }}>
-      {/* Список вакансий */}
       {data?.jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}
 
-      {/* Пагинация */}
       {data && (
         <Pagination
           value={page}
-          onChange={setPage}
+          onChange={onPageChange}
           total={data.pagination.totalPages}
           mt="md"
         />

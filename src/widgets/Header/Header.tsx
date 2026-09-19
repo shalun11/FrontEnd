@@ -3,7 +3,7 @@ import { Container, Group, Text, Anchor, TextInput, Button } from '@mantine/core
 interface HeaderProps {
   search: string;
   onSearchChange: (value: string) => void;
-  onSearchSubmit: () => void;
+  onSearchSubmit: (value: string) => void;
 }
 
 export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) {
@@ -16,7 +16,6 @@ export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) 
     }}>
       <Container size="xl" h="100%">
         <Group justify="space-between" h="100%">
-          {/* Логотип */}
           <Group gap="xs">
             <div style={{
               width: 28,
@@ -37,7 +36,6 @@ export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) 
             </Text>
           </Group>
 
-          {/* Меню + Поиск */}
           <Group gap="xl">
             <Anchor
               href="/"
@@ -62,14 +60,14 @@ export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) 
                 placeholder="Должность или название компании"
                 value={search}
                 onChange={(e) => onSearchChange(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && onSearchSubmit()}
+                onKeyDown={(e) => e.key === 'Enter' && onSearchSubmit(search)}
                 style={{ width: 250 }}
                 size="sm"
               />
               <Button
                 size="sm"
                 color="blue"
-                onClick={onSearchSubmit}
+                onClick={() => onSearchSubmit(search)}
               >
                 Найти
               </Button>
