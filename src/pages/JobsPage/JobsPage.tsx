@@ -1,6 +1,5 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { Container, Title, Grid } from '@mantine/core';
-import { Header } from '../../widgets/Header/Header';
+import { Container, Title, Grid, TextInput, Button, Group } from '@mantine/core';
 import { JobList } from '../../widgets/JobList/JobList';
 import { JobFilters } from '../../features/filters/JobFilters';
 
@@ -62,34 +61,45 @@ export function JobsPage() {
   };
 
   return (
-    <>
-      <Header
-        search={search}
-        onSearchChange={handleSearchChange}
-        onSearchSubmit={handleSearchSubmit}
-      />
-      <Container size="xl" py="xl">
-        <Title order={2} mb="xl">
-          Список вакансий по профессии Frontend-разработчик
-        </Title>
-        <Grid>
-          <Grid.Col span={3}>
-            <JobFilters
-              onSkillsChange={handleSkillsChange}
-              currentSkills={skills}
-            />
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <JobList
-              search={search}
-              city={city}
-              skills={skills}
-              page={page}
-              onPageChange={handlePageChange}
-            />
-          </Grid.Col>
-        </Grid>
-      </Container>
-    </>
+    <Container size="xl" py="xl">
+      <Group gap="xs" mb="xl" justify="flex-end">
+        <TextInput
+          placeholder="Должность или название компании"
+          value={search}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit(search)}
+          style={{ width: 300 }}
+          size="sm"
+        />
+        <Button
+          size="sm"
+          color="blue"
+          onClick={() => handleSearchSubmit(search)}
+        >
+          Найти
+        </Button>
+      </Group>
+
+      <Title order={2} mb="xl">
+        Список вакансий по профессии Frontend-разработчик
+      </Title>
+      <Grid>
+        <Grid.Col span={3}>
+          <JobFilters
+            onSkillsChange={handleSkillsChange}
+            currentSkills={skills}
+          />
+        </Grid.Col>
+        <Grid.Col span={9}>
+          <JobList
+            search={search}
+            city={city}
+            skills={skills}
+            page={page}
+            onPageChange={handlePageChange}
+          />
+        </Grid.Col>
+      </Grid>
+    </Container>
   );
 }
