@@ -1,4 +1,4 @@
-import { useSearchParams, useParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { Container, Title, Grid } from '@mantine/core';
 import { Header } from '../../widgets/Header/Header';
 import { JobList } from '../../widgets/JobList/JobList';
@@ -15,7 +15,6 @@ export function JobsPage() {
   const skills = skillsParam ? skillsParam.split(',') : DEFAULT_SKILLS;
   const page = Number(searchParams.get('page')) || 1;
 
-  // Определяем город из URL
   const getCityFromPath = () => {
     if (location.pathname.includes('moscow')) return 'Москва';
     if (location.pathname.includes('petersburg')) return 'Санкт-Петербург';
@@ -45,9 +44,8 @@ export function JobsPage() {
     setSearchParams(params);
   };
 
-  const handleCityChange = (value: string) => {
-    // Город теперь управляется через табы (роуты), а не через query params
-    // Этот метод оставлен для совместимости
+  const handleCityChange = () => {
+    // Город теперь управляется через табы (роуты)
   };
 
   const handleSkillsChange = (newSkills: string[]) => {
