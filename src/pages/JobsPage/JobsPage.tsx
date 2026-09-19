@@ -1,5 +1,6 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { Container, Title, Grid } from '@mantine/core';
+import { Header } from '../../widgets/Header/Header';
 import { JobList } from '../../widgets/JobList/JobList';
 import { JobFilters } from '../../features/filters/JobFilters';
 
@@ -61,27 +62,34 @@ export function JobsPage() {
   };
 
   return (
-    <Container size="xl" py="xl">
-      <Title order={2} mb="xl">
-        Список вакансий по профессии Frontend-разработчик
-      </Title>
-      <Grid>
-        <Grid.Col span={3}>
-          <JobFilters
-            onSkillsChange={handleSkillsChange}
-            currentSkills={skills}
-          />
-        </Grid.Col>
-        <Grid.Col span={9}>
-          <JobList
-            search={search}
-            city={city}
-            skills={skills}
-            page={page}
-            onPageChange={handlePageChange}
-          />
-        </Grid.Col>
-      </Grid>
-    </Container>
+    <>
+      <Header
+        search={search}
+        onSearchChange={handleSearchChange}
+        onSearchSubmit={handleSearchSubmit}
+      />
+      <Container size="xl" py="xl">
+        <Title order={2} mb="xl">
+          Список вакансий по профессии Frontend-разработчик
+        </Title>
+        <Grid>
+          <Grid.Col span={3}>
+            <JobFilters
+              onSkillsChange={handleSkillsChange}
+              currentSkills={skills}
+            />
+          </Grid.Col>
+          <Grid.Col span={9}>
+            <JobList
+              search={search}
+              city={city}
+              skills={skills}
+              page={page}
+              onPageChange={handlePageChange}
+            />
+          </Grid.Col>
+        </Grid>
+      </Container>
+    </>
   );
 }

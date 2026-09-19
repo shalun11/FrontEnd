@@ -1,6 +1,5 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { Container, Group, Text } from '@mantine/core';
-import { Header } from '../Header/Header';
 
 export function Layout() {
   return (
