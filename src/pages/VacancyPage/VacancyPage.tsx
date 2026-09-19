@@ -69,7 +69,7 @@ export function VacancyPage() {
         <Title order={4} mt="md">О компании</Title>
         <Text>{job.about_company}</Text>
 
-        <Button component={Link} to="/" variant="light" mt="md">
+        <Button component={Link} to="/vacancies" variant="light" mt="md">
           Назад к списку вакансий
         </Button>
       </Stack>
