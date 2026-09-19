@@ -4,16 +4,12 @@ import { IconPlus } from '@tabler/icons-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface JobFiltersProps {
-  onCityChange: (value: string) => void;
   onSkillsChange: (skills: string[]) => void;
-  currentCity?: string;
   currentSkills?: string[];
 }
 
 export function JobFilters({
-  onCityChange,
   onSkillsChange,
-  currentCity = 'Все',
   currentSkills = []
 }: JobFiltersProps) {
   const [newSkill, setNewSkill] = useState('');
@@ -59,7 +55,6 @@ export function JobFilters({
 
   return (
     <Stack gap="md">
-      {/* Ключевые навыки */}
       <div>
         <Text fz="sm" fw={500} mb="xs">Ключевые навыки</Text>
         <Group gap="xs" mb="xs">
@@ -88,7 +83,6 @@ export function JobFilters({
         </Group>
       </div>
 
-      {/* Город - Табы */}
       <Tabs value={getActiveTab()} onChange={handleTabChange}>
         <Tabs.List>
           <Tabs.Tab value="moscow">Москва</Tabs.Tab>

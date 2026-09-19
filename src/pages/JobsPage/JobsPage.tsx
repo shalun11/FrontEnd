@@ -44,10 +44,6 @@ export function JobsPage() {
     setSearchParams(params);
   };
 
-  const handleCityChange = () => {
-    // Город теперь управляется через табы (роуты)
-  };
-
   const handleSkillsChange = (newSkills: string[]) => {
     const params = new URLSearchParams(searchParams);
     if (newSkills.length > 0) {
@@ -79,9 +75,7 @@ export function JobsPage() {
         <Grid>
           <Grid.Col span={3}>
             <JobFilters
-              onCityChange={handleCityChange}
               onSkillsChange={handleSkillsChange}
-              currentCity={city}
               currentSkills={skills}
             />
           </Grid.Col>
