@@ -1,34 +1,43 @@
-import { Container, Group, Text, Anchor, TextInput, Button } from '@mantine/core';
+import { Container, Group, Text, TextInput, Button } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
-  search: string;
-  onSearchChange: (value: string) => void;
-  onSearchSubmit: (value: string) => void;
+  search?: string;
+  onSearchChange?: (value: string) => void;
+  onSearchSubmit?: (value: string) => void;
 }
 
-export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) {
+export function Header({
+  search = '',
+  onSearchChange = () => { },
+  onSearchSubmit = () => { },
+}: HeaderProps) {
   return (
-    <div style={{
-      height: 60,
-      background: 'white',
-      borderBottom: '1px solid #e9ecef',
-      padding: '0 20px'
-    }}>
+    <div
+      style={{
+        height: 60,
+        background: 'white',
+        borderBottom: '1px solid #e9ecef',
+        padding: '0 20px',
+      }}
+    >
       <Container size="xl" h="100%">
         <Group justify="space-between" h="100%">
           <Group gap="xs">
-            <div style={{
-              width: 28,
-              height: 28,
-              borderRadius: '50%',
-              background: '#D32F2F',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontWeight: 700,
-              fontSize: 14
-            }}>
+            <div
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: '50%',
+                background: '#D32F2F',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: 14,
+              }}
+            >
               hh
             </div>
             <Text fz="lg" fw={700} c="dark">
@@ -37,24 +46,16 @@ export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) 
           </Group>
 
           <Group gap="xl">
-            <Anchor
-              href="/"
-              c="dark"
-              fz="sm"
-              fw={500}
-              style={{ textDecoration: 'none' }}
-            >
-              Вакансии FE
-            </Anchor>
-            <Anchor
-              href="/about"
-              c="dimmed"
-              fz="sm"
-              fw={500}
-              style={{ textDecoration: 'none' }}
-            >
-              Обо мне
-            </Anchor>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Text c="dark" fz="sm" fw={500}>
+                Вакансии FE
+              </Text>
+            </Link>
+            <Link to="/about" style={{ textDecoration: 'none' }}>
+              <Text c="dimmed" fz="sm" fw={500}>
+                Обо мне
+              </Text>
+            </Link>
             <Group gap="xs">
               <TextInput
                 placeholder="Должность или название компании"
@@ -64,11 +65,7 @@ export function Header({ search, onSearchChange, onSearchSubmit }: HeaderProps) 
                 style={{ width: 250 }}
                 size="sm"
               />
-              <Button
-                size="sm"
-                color="blue"
-                onClick={() => onSearchSubmit(search)}
-              >
+              <Button size="sm" color="blue" onClick={() => onSearchSubmit(search)}>
                 Найти
               </Button>
             </Group>

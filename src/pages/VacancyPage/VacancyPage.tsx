@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Container, Title, Text, Badge, Stack, Group, Button, Loader, Alert } from '@mantine/core';
 import { useGetJobByIdQuery } from '../../shared/api/jobsApi';
+import { Header } from '../../widgets/Header/Header';
 
 export function VacancyPage() {
   const { id } = useParams<{ id: string }>();
@@ -8,19 +9,25 @@ export function VacancyPage() {
 
   if (isLoading) {
     return (
-      <Container size="md" py="xl">
-        <Loader />
-      </Container>
+      <>
+        <Header />
+        <Container size="md" py="xl">
+          <Loader />
+        </Container>
+      </>
     );
   }
 
   if (isError || !data) {
     return (
-      <Container size="md" py="xl">
-        <Alert color="red" title="Ошибка">
-          Не удалось загрузить вакансию
-        </Alert>
-      </Container>
+      <>
+        <Header />
+        <Container size="md" py="xl">
+          <Alert color="red" title="Ошибка">
+            Не удалось загрузить вакансию
+          </Alert>
+        </Container>
+      </>
     );
   }
 
@@ -36,43 +43,50 @@ export function VacancyPage() {
   };
 
   return (
-    <Container size="md" py="xl">
-      <Stack gap="md">
-        <Title order={2}>{job.name}</Title>
+    <>
+      <Header />
+      <Container size="md" py="xl">
+        <Stack gap="md">
+          <Title order={2}>{job.name}</Title>
 
-        <Group gap="sm">
-          <Text fz="lg" fw={500}>
-            {job.salary} ₽
-          </Text>
+          <Group gap="sm">
+            <Text fz="lg" fw={500}>
+              {job.salary} ₽
+            </Text>
+            <Text fz="md" c="dimmed">
+              {job.experience}
+            </Text>
+          </Group>
+
           <Text fz="md" c="dimmed">
-            {job.experience}
+            {job.company_name}
           </Text>
-        </Group>
 
-        <Text fz="md" c="dimmed">
-          {job.company_name}
-        </Text>
+          <Group gap="xs">
+            <Badge size="sm" color="blue" variant="light">
+              {getSpaceBadge(job.space)}
+            </Badge>
+          </Group>
 
-        <Group gap="xs">
-          <Badge size="sm" color="blue" variant="light">
-            {getSpaceBadge(job.space)}
-          </Badge>
-        </Group>
+          <Text fz="md" c="dimmed">
+            {job.city}
+          </Text>
 
-        <Text fz="md" c="dimmed">
-          {job.city}
-        </Text>
+          <Title order={4} mt="md">
+            Описание вакансии
+          </Title>
+          <Text>{job.description}</Text>
 
-        <Title order={4} mt="md">Описание вакансии</Title>
-        <Text>{job.description}</Text>
+          <Title order={4} mt="md">
+            О компании
+          </Title>
+          <Text>{job.about_company}</Text>
 
-        <Title order={4} mt="md">О компании</Title>
-        <Text>{job.about_company}</Text>
-
-        <Button component={Link} to="/" variant="light" mt="md">
-          Назад к списку вакансий
-        </Button>
-      </Stack>
-    </Container>
+          <Button component={Link} to="/" variant="light" mt="md">
+            Назад к списку вакансий
+          </Button>
+        </Stack>
+      </Container>
+    </>
   );
 }
